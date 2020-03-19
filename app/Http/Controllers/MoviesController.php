@@ -18,11 +18,13 @@ class MoviesController extends Controller
     public function index()
     {
         $name = request()->input('name');
+        $amounth = request()->input('take', Movie::get()->count());
+        $start = request()->input('skip', 0);
         if(!$name){
 
-            return Movie::all();
+            return Movie::skip($start)->take($amounth)->get();
         }
-        return Movie::where('title', 'LIKE', '%'.$name.'%')->get();
+        return Movie::where('title', 'LIKE', '%'.$name.'%')->skip($start)->take($amounth)->get();
     }
 
     /**
