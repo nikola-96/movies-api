@@ -17,7 +17,12 @@ class MoviesController extends Controller
      */
     public function index()
     {
-        return Movie::all();
+        $name = request()->input('name');
+        if(!$name){
+
+            return Movie::all();
+        }
+        return Movie::where('title', 'LIKE', '%'.$name.'%')->get();
     }
 
     /**
